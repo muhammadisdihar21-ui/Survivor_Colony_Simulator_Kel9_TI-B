@@ -1,0 +1,44 @@
+{
+    "hari": 1,
+    "sumber_daya": {
+        "Makanan": 0,
+        "Material": 8,
+        "Obat": 0
+    },
+    "camp_level": 1,
+    "camp_damaged": false,
+    "sick_survivors": {},
+    "explore_count": 1,
+    "survivors": [
+        {
+            "nama": "Isdihar",
+            "energi": 90,
+            "level": 2,
+            "exp": 0,
+            "lokasi": "Hutan"
+        }
+    ],
+    "stack_eksplorasi": [
+        "Camp"
+    ],
+    "queue_eksplorasi": [
+        "Isdihar"
+    ],
+    "area_dikunjungi": [
+        "Hutan"
+    ],
+    "achievements": [],
+    "total_survivor_created": 1,
+    "total_survivor_dead": 0,
+    "max_survivor_reached": 1,
+    "min_survivor_reached": 999,
+    "single_logs": [
+        "Isdihar bergabung ke koloni",
+        "Isdihar mengeksplor Hutan (+8 Material)"
+    ],
+    "double_logs": [
+        "Isdihar bergabung ke koloni",
+        "Isdihar mengeksplor Hutan (+8 Material)"
+    ],
+    "current_turn": "Isdihar"
+}

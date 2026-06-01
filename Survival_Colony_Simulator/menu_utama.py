@@ -1,10 +1,10 @@
-import data_pusat
-import fitur_survivor
-import fitur_eksplorasi
-import fitur_log
-import fitur_camp
-import fitur_achievement
-import fitur_tutorial
+from game_data import data_pusat
+from features import fitur_survivor
+from features import fitur_eksplorasi
+from features import fitur_log
+from features import fitur_camp
+from features import fitur_achievement
+from features import fitur_tutorial
 from colorama import Fore, Style #type: ignore
 import os
 

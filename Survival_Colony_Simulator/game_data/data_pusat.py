@@ -1,4 +1,4 @@
-from komponen_game import Area
+from models.komponen_game import Area
 
 # LIST
 # Menyimpan data survivor

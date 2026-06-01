@@ -1,9 +1,8 @@
-
 import random
-import data_pusat
-import fitur_survivor
-import fitur_log
-from fitur_achievement import check_achievements
+from game_data import data_pusat
+from features import fitur_survivor
+from features import fitur_log
+from features.fitur_achievement import check_achievements
 
 # REKURSIF
 # Traversal area
@@ -130,6 +129,8 @@ def explore_area():
         print(f"💀 {survivor.nama} mati di perjalanan karena sakit")
         data_pusat.survivors.remove(survivor)
         data_pusat.sick_survivors.pop(key, None)
+        fitur_log.add_single_log(f"{survivor.nama} meninggal saat eksplorasi karena sakit")
+        fitur_log.add_double_log(f"{survivor.nama} meninggal saat eksplorasi karena sakit")
         return
 
     # MATI KARENA ENERGI
@@ -137,6 +138,8 @@ def explore_area():
         print(f"\n💀 {survivor.nama} mati karena energi tidak cukup")
         data_pusat.survivors.remove(survivor)
         data_pusat.sick_survivors.pop(key, None)
+        fitur_log.add_single_log(f"{survivor.nama} meninggal karena kehabisan energi")
+        fitur_log.add_double_log(f"{survivor.nama} meninggal karena kehabisan energi")
         return
 
     area = data_pusat.data_area[area_name]
@@ -194,8 +197,12 @@ def explore_area():
     data_pusat.explore_count += 1
 
     # LOG
-    fitur_log.add_single_log(f"{survivor.nama} mengeksplor {area.nama}")
-    fitur_log.add_double_log(f"{survivor.nama} mengeksplor {area.nama}")
+    fitur_log.add_single_log(
+        f"{survivor.nama} mengeksplor {area.nama} (+{amount} {found_resource})"
+        )
+    fitur_log.add_double_log(
+        f"{survivor.nama} mengeksplor {area.nama} (+{amount} {found_resource})"
+        )
 
     # HASIL
     print("\n===================== HASIL EKSPLORASI =====================")
@@ -255,6 +262,8 @@ def backtrack_area():
     print(f"Mundur dari : {area_sekarang}")
     print(f"Sekarang di : {survivor.lokasi}")
     print(f"{survivor.nama} berhasil mengambil satu langkah mundur!")
+    fitur_log.add_single_log(f"{survivor.nama} backtrack dari {area_sekarang} ke {survivor.lokasi}")
+    fitur_log.add_double_log(f"{survivor.nama} backtrack dari {area_sekarang} ke {survivor.lokasi}")
 
 # PROCESS QUEUE
 # Survivor yang masuk antrean akan diproses berdasarkan FIFO

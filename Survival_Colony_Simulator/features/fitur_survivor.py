@@ -1,7 +1,7 @@
-import data_pusat
-from fitur_achievement import check_achievements
-from komponen_game import Survivor
-import fitur_log
+from game_data import data_pusat
+from features.fitur_achievement import check_achievements
+from models.komponen_game import Survivor
+from features import fitur_log
 
 # MENAMBAHKAN SURVIVOR
 def add_survivor():

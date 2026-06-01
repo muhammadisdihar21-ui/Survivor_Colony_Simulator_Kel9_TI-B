@@ -1,10 +1,10 @@
 import json
 import random
-import data_pusat
-import fitur_survivor
-import fitur_log
-from fitur_achievement import check_achievements
-from komponen_game import Survivor
+from game_data import data_pusat
+from features import fitur_survivor
+from features import fitur_log
+from features.fitur_achievement import check_achievements
+from models.komponen_game import Survivor
 
 # MENAMPILKAN RESOURCE
 def show_resources():
@@ -61,6 +61,8 @@ def eat_food():
         survivor.energi = 100
         
     print(f"\n{survivor.nama} mendapatkan +{amount * 10} energi")
+    fitur_log.add_single_log(f"{survivor.nama} diberi {amount} Makanan (+{amount * 10} Energi)")
+    fitur_log.add_double_log(f"{survivor.nama} diberi {amount} Makanan (+{amount * 10} Energi)")
 
 # SCALING COST BERDASARKAN HARI
 def get_event_cost():
@@ -87,6 +89,10 @@ def repair_camp():
     data_pusat.sumber_daya["Material"] -= repair_cost
     data_pusat.camp_damaged = False
     print(f"\nCamp berhasil diperbaiki dengan biaya {repair_cost} Material")
+
+    fitur_log.add_single_log(f"Camp diperbaiki ({repair_cost} Material digunakan)")
+
+    fitur_log.add_double_log(f"Camp diperbaiki ({repair_cost} Material digunakan)")
 
 # HEAL SURVIVOR
 # Fungsi mengobati survivor yang sakit
@@ -134,6 +140,10 @@ def heal_survivor():
         
     print(f"\n{name} berhasil sembuh dengan biaya {medicine_cost} Obat")
     print("Energi rendah, beri makanan untuk menambah energi")
+
+    fitur_log.add_single_log(f"{name} sembuh dari penyakit ({medicine_cost} Obat digunakan)")
+
+    fitur_log.add_double_log(f"{name} sembuh dari penyakit ({medicine_cost} Obat digunakan)")
     
 # INFO UPGRADE
 def show_upgrade_info():
@@ -284,6 +294,10 @@ def upgrade_camp():
     data_pusat.camp_level = next_level
 
     print(f"\nCamp berhasil upgrade ke Level {next_level}!")
+
+    fitur_log.add_single_log(f"Camp di-upgrade ke Level {next_level}")
+
+    fitur_log.add_double_log(f"Camp di-upgrade ke Level {next_level}")
     
     check_achievements()
 
@@ -303,10 +317,14 @@ def next_day():
 
         for s in data_pusat.survivors:
             if s.nama.lower() in data_pusat.sick_survivors:
-                print(f"- {s.nama} meninggal karena tidak segera diobati")
+                print(f"   - {s.nama} mati karena tidak segera diobati")
                 dead.append(s)
 
         for s in dead:
+            fitur_log.add_single_log(f"{s.nama} meninggal karena penyakit")
+
+            fitur_log.add_double_log(f"{s.nama} meninggal karena penyakit")
+
             data_pusat.survivors.remove(s)
         
         data_pusat.total_survivor_dead += len(dead)
@@ -349,6 +367,7 @@ def next_day():
     if data_pusat.camp_level >= 3:
         events.extend([
             "Tidak terjadi apa-apa",
+            "Menemukan peti logistik",
             "Menemukan makanan tambahan"
         ])
 
@@ -371,7 +390,7 @@ def next_day():
             for sick in sick_list:
                 sick.energi = 0
                 data_pusat.sick_survivors[sick.nama.lower()] = True
-                print(f"- {sick.nama} jatuh sakit (energi drop ke 0)")
+                print(f"   - {sick.nama} jatuh sakit (energi drop ke 0)")
 
     # Event camp rusak
     elif event == "Camp rusak":
@@ -473,7 +492,7 @@ def save_game():
         )
 
     # SAVE JSON
-    with open("save_data.json", "w") as file:
+    with open("game_data/save_data.json", "w") as file:
         json.dump(data, file, indent=4)
 
     print("\n💾 Game berhasil disimpan")
@@ -482,7 +501,7 @@ def save_game():
 def load_game():
 
     try:
-        with open("save_data.json", "r") as file:
+        with open("game_data/save_data.json", "r") as file:
             data = json.load(file)
 
         # RESET DATA

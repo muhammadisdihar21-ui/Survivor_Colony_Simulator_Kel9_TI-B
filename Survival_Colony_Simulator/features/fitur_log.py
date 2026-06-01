@@ -1,5 +1,5 @@
-import data_pusat
-from struktur_node import SingleNode, DoubleNode, CircularNode
+from game_data import data_pusat
+from structures.struktur_node import SingleNode, DoubleNode, CircularNode
 
 # SINGLE LINKED LIST
 # Menambahkan activity log

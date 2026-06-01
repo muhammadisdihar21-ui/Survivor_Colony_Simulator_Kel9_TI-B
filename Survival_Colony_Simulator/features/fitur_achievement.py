@@ -1,4 +1,4 @@
-import data_pusat
+from game_data import data_pusat
 
 def check_achievements():
     s = data_pusat.survivors
@@ -91,7 +91,7 @@ def add_achievement(name, desc):
 
 def show_achievements():
     print("\n" + "="*60)
-    print("🏆            ACHIEVEMENT COLONY")
+    print("                   🏆 ACHIEVEMENT COLONY")
     print("="*60)
 
     if not data_pusat.achievements:
@@ -100,10 +100,11 @@ def show_achievements():
         return
 
     print(f"\nTotal Unlocked: {len(data_pusat.achievements)}\n")
-
+    print("-"*60)
     for i, ach in enumerate(data_pusat.achievements, 1):
         print(f"🏆 {i}. {ach['name']}")
-        print(f"   📌 {ach['desc']}")
+        print(f"      📌 {ach['desc']}")
         print("-"*60)
-
+        
+    print()
     print("="*60)
