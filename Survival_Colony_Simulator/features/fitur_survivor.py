@@ -73,13 +73,60 @@ def search_survivor():
     if not found:
         print("\nSurvivor tidak ditemukan")
 
+# MERGE SORT
+def merge_sort_survivor(arr, choice):
+
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+
+    left = merge_sort_survivor(arr[:mid], choice)
+    right = merge_sort_survivor(arr[mid:], choice)
+
+    return merge(left, right, choice)
+
+
+def merge(left, right, choice):
+
+    result = []
+
+    i = 0
+    j = 0
+
+    while i < len(left) and j < len(right):
+
+        if choice == "1":  # Energi
+
+            if left[i].energi >= right[j].energi:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+
+        elif choice == "2":  # Level
+
+            if left[i].level >= right[j].level:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
 # SORTING SURVIVOR
 def sort_survivors():
 
     if not data_pusat.survivors:
         print("\nBelum ada survivor")
         return
-
+    
+    print()
     print("1. Urutkan berdasarkan Energi")
     print("2. Urutkan berdasarkan Level")
 
@@ -93,24 +140,7 @@ def sort_survivors():
         print("\nPilihan tidak valid")
         return
 
-    # Copy list agar data asli tidak berubah
-    sorted_list = data_pusat.survivors[:]
-
-    n = len(sorted_list)
-
-    # BUBBLE SORT
-    for i in range(n):
-        for j in range(0, n - i - 1):
-
-            if choice == "1":
-                if sorted_list[j].energi < sorted_list[j + 1].energi:
-                    sorted_list[j], sorted_list[j + 1] = sorted_list[j + 1], sorted_list[j]
-
-
-            elif choice == "2":
-                if sorted_list[j].level < sorted_list[j + 1].level:
-                    sorted_list[j], sorted_list[j + 1] = sorted_list[j + 1], sorted_list[j]
-
+    sorted_list = merge_sort_survivor(data_pusat.survivors[:], choice)
 
     print(f"\n============= DATA SURVIVOR BERDASARKAN {kategori} =============")
     print("------------------------------------------------------------")
