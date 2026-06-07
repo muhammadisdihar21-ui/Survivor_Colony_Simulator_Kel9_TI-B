@@ -40,10 +40,8 @@ def recursive_area(current_area="Camp", visited=None, depth=0, indent=""):
 
         if depth == 0:
             branch_symbol = "└── " if is_last else "├── "
-            next_indent = "    " if is_last else "│   "
         else:
             branch_symbol = "    └── " if is_last else "    ├── "
-            next_indent = indent.replace("├── ", "│   ").replace("└── ", "    ") + ("        " if is_last else "    │   ")
             
         recursive_area(next_area, visited, depth + 1, indent=indent.replace("├── ", "│   ").replace("└── ", "    ") + branch_symbol)
 
